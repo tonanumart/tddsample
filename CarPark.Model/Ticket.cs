@@ -9,12 +9,22 @@ namespace CarPark.Model
     public class Ticket
     {
         public DateTime DateIn { get; set; }
-        public DateTime DateOut { get; set; }
-        public decimal ParkingFee
+        public DateTime? DateOut { get; set; }
+        public decimal? ParkingFee
         {
             get
             {
-                TimeSpan minInterval = this.DateOut - this.DateIn;
+
+
+                if (!this.DateOut.HasValue)
+                    return null;
+
+                if (this.DateOut < this.DateIn)
+                {
+                    throw new Exception("DateTime out must more than Dateime In");
+                }
+
+                TimeSpan minInterval = this.DateOut.Value - this.DateIn;
                 if (minInterval.TotalMinutes < 180)
                 {
                     if (minInterval.TotalMinutes <= 15)
