@@ -1,6 +1,23 @@
 ﻿@{
     ViewBag.Title = "CheckIn";
 }
+<h2>Check In Car Parking</h2>
+@using (Html.BeginForm()) {
 
-<h2>CheckIn</h2>
+    @Html.TextBox("PlateNo")
+    <button type="submit"
+            class="btn btn-success">
+        Submit
+    </button>
+}
+
+<hr />
+@if (TempData["LastTicket"] != null)
+{
+    CarPark.Model.Ticket ticket = TempData["LastTicket"] as CarPark.Model.Ticket;
+    <div>
+        @ticket.DateIn<br />
+        Last Id = @ticket.Id
+    </div>
+}
 

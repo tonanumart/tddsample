@@ -2,5 +2,22 @@
     ViewBag.Title = "CheckOut";
 }
 
-<h2>CheckOut</h2>
-
+<h2>Check Out Car Parking</h2>
+@using (Html.BeginForm())
+{
+    @Html.TextBox("Id")
+    <button type="submit"
+            class="btn btn-success">
+        Submit
+    </button>
+}
+<hr />
+@if (TempData["LastTicket"] != null)
+{
+    CarPark.Model.Ticket ticket = TempData["LastTicket"] as CarPark.Model.Ticket;
+    <div>
+        @ticket.DateIn<br />
+        @ticket.DateOut<br />
+        Fee = @ticket.ParkingFee
+    </div>
+}
