@@ -126,5 +126,24 @@ namespace CarPark.Facts
             }
 
         }
+
+        public class DataDriventest {
+
+            //[Fact]
+            [Theory]
+            [InlineData("9:00","17:00",200)]
+            [InlineData("9:00", "18:00", 230)]
+            [InlineData("9:00", "19:00", 260)]
+            public void TestData(string dateIn,string dateOut,decimal expectedValue)
+            {
+                Ticket ticket = new Ticket();
+                ticket.DateIn = DateTime.Parse(dateIn);
+                ticket.DateOut = DateTime.Parse(dateOut);
+
+                decimal? fee = ticket.ParkingFee;
+                Assert.Equal(expectedValue, fee);
+            }
+
+        }
     }
 }
