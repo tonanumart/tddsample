@@ -1,0 +1,44 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace CarPark.Model
+{
+    public class Ticket
+    {
+        public DateTime DateIn { get; set; }
+        public DateTime DateOut { get; set; }
+        public decimal ParkingFee
+        {
+            get
+            {
+                TimeSpan minInterval = this.DateOut - this.DateIn;
+                if (minInterval.TotalMinutes < 180)
+                {
+                    if (minInterval.TotalMinutes <= 15)
+                    {
+                        return 0;
+                    }
+                    return Cost.Minimum;
+                }
+                else
+                {
+                    var afterhour = minInterval.Hours - 3;
+                    if (minInterval.TotalHours - minInterval.Hours > 0.25)//more than 1 a quarter
+                        afterhour++;
+                    return Cost.Minimum + (Cost.UnitPerHour * afterhour);
+                }
+            }
+        }
+        public string PlateNo { get; set; }
+    }
+
+    public class Cost
+    {
+        public static decimal Minimum = 50M;
+        public static decimal UnitPerHour = 30M;
+    }
+
+}
